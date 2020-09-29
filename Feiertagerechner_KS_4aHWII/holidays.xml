@@ -1,0 +1,77 @@
+<holiday>
+    <DatesOfholidays>
+  <Date>
+      <name>Neujahr</name>
+      <Month>1</Month>
+      <Day>1</Day>
+  </Date>
+
+    <Date>
+        <name>Heilige Drei Könige</name>
+        <Month>1</Month>
+        <Day>6</Day>
+    </Date>
+
+    <Date>
+        <name>Staatsfeiertag01</name>
+        <Month>5</Month>
+        <Day>1</Day>
+    </Date>
+    <Date>
+        <name>Mariä Himmelfahrt</name>
+        <Month>8</Month>
+        <Day>15</Day>
+    </Date>
+
+    <Date>
+        <name>Nationalfeiertag01</name>
+        <Month>10</Month>
+        <Day>26</Day>
+    </Date>
+
+    <Date>
+        <name>Allerheiligen</name>
+        <Month>11</Month>
+        <Day>1</Day>
+    </Date>
+
+    <Date>
+        <name>Mariä Empfängnis</name>
+        <Month>12</Month>
+        <Day>8</Day>
+    </Date>
+    <Date>
+        <name>Christtag</name>
+        <Month>12</Month>
+        <Day>25</Day>
+    </Date>
+
+    <Date>
+        <name>Stefanitag</name>
+        <Month>12</Month>
+        <Day>26</Day>
+    </Date>
+
+
+    </DatesOfholidays>
+
+<DaysofHolidays>
+    <Days>
+        <name>Ostermontag</name>
+        <Day>MONDAY</Day>
+    </Days>
+
+    <Days>
+        <name>Christi Himmelfahrt</name>
+        <Day>THURSDAY</Day>
+    </Days>
+
+    <Days>
+        <name>Pfingstmontag</name>
+        <Day>MONDAY</Day>
+    </Days>
+
+</DaysofHolidays>
+
+
+</holiday>
