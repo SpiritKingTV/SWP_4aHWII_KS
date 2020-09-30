@@ -75,6 +75,10 @@
         <name>Karfreitag</name>
         <Day>FRIDAY</Day>
     </Days>
+     <Days>
+        <name>Fronleichnam</name>
+        <Day>THURSDAY</Day>
+    </Days>
 
 </DaysofHolidays>
 
