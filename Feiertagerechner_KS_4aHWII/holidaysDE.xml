@@ -1,0 +1,64 @@
+<holiday>
+
+    <!-------Sind Bundesweite Feiertage----->
+    <DatesOfholidays>
+        <Date>
+            <name>Neujahr</name>
+            <Month>1</Month>
+            <Day>1</Day>
+        </Date>
+
+        <Date>
+            <name>Tag der Arbeit</name>
+            <Month>5</Month>
+            <Day>1</Day>
+        </Date>
+
+        <Date>
+            <name>Tag der deutschen Einheit</name>
+            <Month>10</Month>
+            <Day>3</Day>
+        </Date>
+
+        <Date>
+            <name>1. Weihnachtsfeiertag</name>
+            <Month>12</Month>
+            <Day>25</Day>
+        </Date>
+
+        <Date>
+            <name>2. Weihnachtsfeiertag</name>
+            <Month>12</Month>
+            <Day>26</Day>
+        </Date>
+
+    </DatesOfholidays>
+
+
+
+
+    <DaysofHolidays>
+        <Days>
+            <name>Ostermontag</name>
+            <Day>MONDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Karfreitag</name>
+            <Day>FRIDAY</Day>
+        </Days>
+
+        <Days>
+            <name>CHristi Himmelfahrt</name>
+            <Day>THURSDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Pfingstmontag</name>
+            <Day>MONDAY</Day>
+        </Days>
+
+    </DaysofHolidays>
+
+
+</holiday>

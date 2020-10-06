@@ -1,0 +1,102 @@
+<holiday>
+
+    <!-------Sind Bundesweite Feiertage----->
+    <DatesOfholidays>
+        <Date>
+            <name>Neujahr</name>
+            <Month>1</Month>
+            <Day>1</Day>
+        </Date>
+
+        <Date>
+            <name>Berchtoldstag</name>
+            <Month>1</Month>
+            <Day>2</Day>
+        </Date>
+
+        <Date>
+            <name>Heilige drei Könige</name>
+            <Month>1</Month>
+            <Day>6</Day>
+        </Date>
+
+        <Date>
+            <name>Ausrufung der Republik</name>
+            <Month>3</Month>
+            <Day>1</Day>
+        </Date>
+
+        <Date>
+            <name>Fest der Unabhängigkeit</name>
+            <Month>6</Month>
+            <Day>23</Day>
+        </Date>
+
+        <Date>
+            <name>Nationalfeiertag Schweiz</name>
+            <Month>8</Month>
+            <Day>1</Day>
+        </Date>
+
+
+        <Date>
+            <name>St. Nikolaus von Flüe</name>
+            <Month>9</Month>
+            <Day>25</Day>
+        </Date>
+
+        <Date>
+            <name>Allerheiligen</name>
+            <Month>11</Month>
+            <Day>1</Day>
+        </Date>
+
+        <Date>
+            <name>Weihnachtstag</name>
+            <Month>12</Month>
+            <Day>25</Day>
+        </Date>
+
+        <Date>
+            <name>Stephanstag</name>
+            <Month>12</Month>
+            <Day>26</Day>
+        </Date>
+
+
+
+    </DatesOfholidays>
+
+
+
+
+    <DaysofHolidays>
+        <Days>
+            <name>Ostermontag</name>
+            <Day>MONDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Karfreitag</name>
+            <Day>FRIDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Näfelser Fahrt</name>
+            <Day>THURSDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Genfer Bettag</name>
+            <Day>THURSDAY</Day>
+        </Days>
+
+        <Days>
+            <name>Eidg. Dank-, Buss- und Bettag</name>
+            <Day>SUNDAY</Day>
+        </Days>
+
+    </DaysofHolidays>
+
+
+</holiday>
