@@ -1,5 +1,7 @@
 package main;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -8,86 +10,77 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static NodeList dateOH, daysOH;
-    static int mon = 0, tue = 0, wed = 0, thu = 0, fri = 0;
-    static int year;
-    static LocalDate startDate;
-    static List<LocalDate> holidaysMonth = new ArrayList<LocalDate>();
-    static List<String> holidaysDays = new ArrayList<String>();
+    static int mon=0,tue=0,wed=0,thu=0,fri =0;
+    static int startyear, countyear, yearnow;
+    static List<LocalDate> dynamicDates = new ArrayList<>();
+    static List<LocalDate> holidayDates = new ArrayList<>();
+    static String url;
     static Scanner reader = new Scanner(System.in);
+    static String Bundesland = "&nur_land=BY";
+    static File file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidays.xml");
 
-
-    public static void main(String[] args) {
-         File file = new File(country());
+    public static void main(String[] args) throws IOException {
         importFile();
-        input();
-        fillList(holidaysDays, holidaysMonth);
-        checkday(holidaysDays, holidaysMonth);
+        anzahlJahre();
+        String url = "https://feiertage-api.de/api/?jahr=" + startyear + Bundesland;
+        yearnow = startyear;
+        JSONObject json = new JSONObject(IOUtils.toString(new URL(url), Charset.forName("UTF-8")));
+        fillList(holidayDates);
+
+        for (int i = 0; i < countyear; i++) {
+
+            getDynamicDate(json, "Ostermontag");
+            getDynamicDate(json, "Christi Himmelfahrt");
+            getDynamicDate(json, "Pfingstmontag");
+            getDynamicDate(json, "Fronleichnam");
+            yearnow++;
+            URLFromYear(yearnow);
+        }
+        checkday(dynamicDates,holidayDates);
         output();
+        System.out.println(dynamicDates.toString());
+        System.out.println(holidayDates.toString());
+
+
 
 
     }
 
-
-    public static void importFile() {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(file);
-            doc.getDocumentElement().normalize();
-            dateOH = doc.getElementsByTagName("Date");
-            daysOH = doc.getElementsByTagName("Days");
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void URLFromYear(int year) throws MalformedURLException {
+        url = ("https://feiertage-api.de/api/?jahr=" + year + Bundesland);
     }
 
-    public static void fillList(List<String> holidaysDays, List<LocalDate> holidaysDates) {
+    public static void anzahlJahre() {
+        System.out.print("Geben Sie das Startjahr ein: ");
+        startyear = reader.nextInt();
 
-        for (int i = 0; i < daysOH.getLength(); i++) {
-            Node node = daysOH.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-                holidaysDays.add(eElement.getElementsByTagName("Day").item(0).getTextContent());
+        System.out.print("Geben Sie die Anzahl der Jahre ein: ");
+        countyear = reader.nextInt();
+    }
 
-            }
-        }
-
-
-        for (int i = 0; i < dateOH.getLength(); i++) {
-            Node node = dateOH.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-                holidaysDates.add(LocalDate.of(startDate.getYear(), Integer.parseInt(eElement.getElementsByTagName("Month").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("Day").item(0).getTextContent())));
-
-            }
-        }
-        for (int y = 1; y < year; y++) {
-            for (int i = 0; i < dateOH.getLength(); i++) {
-                holidaysDates.add(holidaysDates.get(i).plusYears(y));
-            }
-        }
-
+    private static void getDynamicDate(JSONObject json, String key) {
+        JSONObject daten = (JSONObject) json.get(key);
+        String date = daten.get("datum").toString();
+        LocalDate ldate = LocalDate.parse(date);
+        dynamicDates.add(ldate);
+        System.out.println(ldate.toString());
 
     }
 
-    public static void input() {
-        System.out.print("Anzahl der Jahre eingeben: ");
-        year = reader.nextInt();
-        System.out.print("Startjahr[yyyy]: ");
-        startDate = LocalDate.of(reader.nextInt(), 1, 1);
-
-    }
-
-    public static void checkday(List<String> holidaysDays, List<LocalDate> holidaysDates) {
+    public static void checkday(List<LocalDate> dynamicDates, List<LocalDate> holidaysDates) {
         for (int i = 0; i < holidaysDates.size(); i++) {
             switch (holidaysDates.get(i).getDayOfWeek()) {
                 case MONDAY:
@@ -113,27 +106,60 @@ public class Main {
 
             }
         }
-        for (int i = 0; i < holidaysDays.size(); i++) {
-            switch (holidaysDays.get(i)) {
-                case "MONDAY":
-                    mon = mon + year;
+        for (int i = 0; i < dynamicDates.size(); i++) {
+            switch (dynamicDates.get(i).getDayOfWeek()) {
+                case MONDAY:
+                    mon++;
                     break;
-
-                case "TUESDAY":
-                    tue = tue + year;
+                case TUESDAY:
+                    tue++;
                     break;
-
-                case "WEDNESDAY":
-                    wed = wed + year;
-                    break;
-
-                case "THURSDAY":
-                    thu = thu + year;
+                case WEDNESDAY:
+                    wed++;
 
                     break;
-                case "FRIDAY":
-                    fri = fri + year;
+                case THURSDAY:
+
+                    thu++;
                     break;
+
+
+                case FRIDAY:
+
+                    fri++;
+                    break;
+
+            }
+        }
+    }
+
+    public static void importFile() {
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(file);
+            doc.getDocumentElement().normalize();
+            dateOH = doc.getElementsByTagName("Date");
+            daysOH = doc.getElementsByTagName("Days");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void fillList(List<LocalDate> holidaysDates){
+        for (int i = 0; i < dateOH.getLength(); i++) {
+            Node node = dateOH.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) node;
+                holidaysDates.add(LocalDate.of(startyear, Integer.parseInt(eElement.getElementsByTagName("Month").item(0).getTextContent()), Integer.parseInt(eElement.getElementsByTagName("Day").item(0).getTextContent())));
+
+            }
+        }
+        for (int y = 1; y < countyear; y++) {
+            for (int i = 0; i < dateOH.getLength(); i++) {
+                holidaysDates.add(holidaysDates.get(i).plusYears(y));
             }
         }
 
@@ -148,39 +174,5 @@ public class Main {
         System.out.println("Donnerstage: " + thu);
         System.out.println("Freitage: "+ fri);
     }
-
-    public static String country(File file){
-        String answer;
-        System.out.print("In welcher Region möchten Sie das Programm anwenden[CH,AT,DE]: ");
-        answer = reader.next();
-
-//gibt pfad zurück, welcher in FIle hinein geschrieben wird
-        if(answer.contains("DE")){
-             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysDE.xml");
-            System.out.println("Ich bin DE");
-        }else if (answer.contains("AT")){
-             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysAT.xml");
-            System.out.println("Ich bin AT");
-        }else if(answer.contains("CH")){
-             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysCH.xml");
-            System.out.println("Ich bin CH");
-        }
-
-        switch (answer){
-            case"DE":
-
-                break;
-            case"AT":
-
-                break;
-
-            case"CH":
-
-                break;
-        }
-
-return null;
-    }
-
 
 }
