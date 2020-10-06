@@ -16,7 +16,6 @@ import java.util.Scanner;
 public class Main {
     static NodeList dateOH, daysOH;
     static int mon = 0, tue = 0, wed = 0, thu = 0, fri = 0;
-    static File file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidays.xml");
     static int year;
     static LocalDate startDate;
     static List<LocalDate> holidaysMonth = new ArrayList<LocalDate>();
@@ -25,11 +24,12 @@ public class Main {
 
 
     public static void main(String[] args) {
+         File file = new File(country());
         importFile();
         input();
         fillList(holidaysDays, holidaysMonth);
-       checkday(holidaysDays, holidaysMonth);
-       output();
+        checkday(holidaysDays, holidaysMonth);
+        output();
 
 
     }
@@ -147,6 +147,39 @@ public class Main {
         System.out.println("Mittwoche: " + wed);
         System.out.println("Donnerstage: " + thu);
         System.out.println("Freitage: "+ fri);
+    }
+
+    public static String country(File file){
+        String answer;
+        System.out.print("In welcher Region möchten Sie das Programm anwenden[CH,AT,DE]: ");
+        answer = reader.next();
+
+//gibt pfad zurück, welcher in FIle hinein geschrieben wird
+        if(answer.contains("DE")){
+             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysDE.xml");
+            System.out.println("Ich bin DE");
+        }else if (answer.contains("AT")){
+             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysAT.xml");
+            System.out.println("Ich bin AT");
+        }else if(answer.contains("CH")){
+             file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidaysCH.xml");
+            System.out.println("Ich bin CH");
+        }
+
+        switch (answer){
+            case"DE":
+
+                break;
+            case"AT":
+
+                break;
+
+            case"CH":
+
+                break;
+        }
+
+return null;
     }
 
 
