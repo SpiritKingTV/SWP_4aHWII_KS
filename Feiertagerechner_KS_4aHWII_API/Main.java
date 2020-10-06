@@ -247,11 +247,10 @@ public class Main extends Application {
         VBox vbox = new VBox(barChart);
 
         primaryStage.setTitle("Grafik über Anzahl der Feiertage");
-        Scene scene = new Scene(vbox, 400, 200);
+        Scene scene = new Scene(vbox, 700, 300);
 
         primaryStage.setScene(scene);
-        primaryStage.setHeight(500);
-        primaryStage.setWidth(700);
+
 
         primaryStage.show();
     }
