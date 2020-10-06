@@ -1,5 +1,13 @@
 package main;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -21,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Main extends Application {
     static NodeList dateOH, daysOH;
     static int mon=0,tue=0,wed=0,thu=0,fri =0;
     static int startyear, countyear, yearnow;
@@ -51,8 +59,7 @@ public class Main {
         }
         checkday(dynamicDates,holidayDates);
         output();
-        System.out.println(dynamicDates.toString());
-        System.out.println(holidayDates.toString());
+      Application.launch(args);
 
 
 
@@ -76,7 +83,7 @@ public class Main {
         String date = daten.get("datum").toString();
         LocalDate ldate = LocalDate.parse(date);
         dynamicDates.add(ldate);
-        System.out.println(ldate.toString());
+
 
     }
 
@@ -174,5 +181,78 @@ public class Main {
         System.out.println("Donnerstage: " + thu);
         System.out.println("Freitage: "+ fri);
     }
+/*
+    public static void start(Stage primaryStage) throws Exception{
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Wochentag");
 
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Feiertage");
+
+
+        //BarChart erstellen
+        BarChart<String, Number> barChart = new BarChart<String,Number>(xAxis,yAxis);
+
+        XYChart.Series<String,Number> strang = new XYChart.Series<String,Number>();
+        //strang.setName("Montag");
+        strang.getData().add(new XYChart.Data<String,Number>("Montag",mon));
+        strang.getData().add(new XYChart.Data<String,Number>("Dienstag",tue));
+        strang.getData().add(new XYChart.Data<String,Number>("Mittwoch",wed));
+        strang.getData().add(new XYChart.Data<String,Number>("Donnerstag",thu));
+        strang.getData().add(new XYChart.Data<String,Number>("Freitag",fri));
+
+        barChart.getData().add(strang);
+
+
+        barChart.setTitle("Feiertagberechner von "+ startyear+" über " + countyear + " Jahre");
+
+        VBox vbox = new VBox(barChart);
+
+        primaryStage.setTitle("Grafik über Anzahl der Feiertage");
+        Scene scene = new Scene(vbox, 400, 200);
+
+        primaryStage.setScene(scene);
+        primaryStage.setHeight(300);
+        primaryStage.setWidth(400);
+
+        primaryStage.show();
+
+    }
+*/
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        CategoryAxis xAxis = new CategoryAxis();
+        xAxis.setLabel("Wochentag");
+
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Feiertage");
+
+
+        //BarChart erstellen
+        BarChart<String, Number> barChart = new BarChart<String,Number>(xAxis,yAxis);
+
+        XYChart.Series<String,Number> strang = new XYChart.Series<String,Number>();
+        //strang.setName("Montag");
+        strang.getData().add(new XYChart.Data<String,Number>("Montag",mon));
+        strang.getData().add(new XYChart.Data<String,Number>("Dienstag",tue));
+        strang.getData().add(new XYChart.Data<String,Number>("Mittwoch",wed));
+        strang.getData().add(new XYChart.Data<String,Number>("Donnerstag",thu));
+        strang.getData().add(new XYChart.Data<String,Number>("Freitag",fri));
+
+        barChart.getData().add(strang);
+
+
+        barChart.setTitle("Feiertagberechner von "+ startyear+" über " + countyear + " Jahre");
+
+        VBox vbox = new VBox(barChart);
+
+        primaryStage.setTitle("Grafik über Anzahl der Feiertage");
+        Scene scene = new Scene(vbox, 400, 200);
+
+        primaryStage.setScene(scene);
+        primaryStage.setHeight(500);
+        primaryStage.setWidth(700);
+
+        primaryStage.show();
+    }
 }
