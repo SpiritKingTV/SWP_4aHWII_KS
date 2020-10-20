@@ -1,4 +1,3 @@
-package main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,11 +22,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
+import java.sql.*;
 
 public class Main extends Application {
     static NodeList dateOH, daysOH;
@@ -37,8 +36,9 @@ public class Main extends Application {
     static List<LocalDate> holidayDates = new ArrayList<>();
     static String url;
     static Scanner reader = new Scanner(System.in);
+    static String fromTo = "";
     static String Bundesland = "&nur_land=BY";
-    static File file = new File("C:\\Users\\Admin\\Desktop\\Repositories\\Briefe\\src\\holidays.xml");
+    static File file = new File("C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\src\\holidays.xml");
 
     public static void main(String[] args) throws IOException {
         importFile();
@@ -57,9 +57,21 @@ public class Main extends Application {
             yearnow++;
             URLFromYear(yearnow);
         }
+        Main db = new Main();
         checkday(dynamicDates,holidayDates);
         output();
-      Application.launch(args);
+        vonBis();
+        Application.launch(args);
+
+        db.connectDB();
+        db.createNewDatabase();
+        db.createTableofDB();
+        db.insert();
+        db.selectDB();
+
+
+
+
 
 
 
@@ -181,44 +193,44 @@ public class Main extends Application {
         System.out.println("Donnerstage: " + thu);
         System.out.println("Freitage: "+ fri);
     }
-/*
-    public static void start(Stage primaryStage) throws Exception{
-        CategoryAxis xAxis = new CategoryAxis();
-        xAxis.setLabel("Wochentag");
+    /*
+        public static void start(Stage primaryStage) throws Exception{
+            CategoryAxis xAxis = new CategoryAxis();
+            xAxis.setLabel("Wochentag");
 
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Feiertage");
-
-
-        //BarChart erstellen
-        BarChart<String, Number> barChart = new BarChart<String,Number>(xAxis,yAxis);
-
-        XYChart.Series<String,Number> strang = new XYChart.Series<String,Number>();
-        //strang.setName("Montag");
-        strang.getData().add(new XYChart.Data<String,Number>("Montag",mon));
-        strang.getData().add(new XYChart.Data<String,Number>("Dienstag",tue));
-        strang.getData().add(new XYChart.Data<String,Number>("Mittwoch",wed));
-        strang.getData().add(new XYChart.Data<String,Number>("Donnerstag",thu));
-        strang.getData().add(new XYChart.Data<String,Number>("Freitag",fri));
-
-        barChart.getData().add(strang);
+            NumberAxis yAxis = new NumberAxis();
+            yAxis.setLabel("Feiertage");
 
 
-        barChart.setTitle("Feiertagberechner von "+ startyear+" über " + countyear + " Jahre");
+            //BarChart erstellen
+            BarChart<String, Number> barChart = new BarChart<String,Number>(xAxis,yAxis);
 
-        VBox vbox = new VBox(barChart);
+            XYChart.Series<String,Number> strang = new XYChart.Series<String,Number>();
+            //strang.setName("Montag");
+            strang.getData().add(new XYChart.Data<String,Number>("Montag",mon));
+            strang.getData().add(new XYChart.Data<String,Number>("Dienstag",tue));
+            strang.getData().add(new XYChart.Data<String,Number>("Mittwoch",wed));
+            strang.getData().add(new XYChart.Data<String,Number>("Donnerstag",thu));
+            strang.getData().add(new XYChart.Data<String,Number>("Freitag",fri));
 
-        primaryStage.setTitle("Grafik über Anzahl der Feiertage");
-        Scene scene = new Scene(vbox, 400, 200);
+            barChart.getData().add(strang);
 
-        primaryStage.setScene(scene);
-        primaryStage.setHeight(300);
-        primaryStage.setWidth(400);
 
-        primaryStage.show();
+            barChart.setTitle("Feiertagberechner von "+ startyear+" über " + countyear + " Jahre");
 
-    }
-*/
+            VBox vbox = new VBox(barChart);
+
+            primaryStage.setTitle("Grafik über Anzahl der Feiertage");
+            Scene scene = new Scene(vbox, 400, 200);
+
+            primaryStage.setScene(scene);
+            primaryStage.setHeight(300);
+            primaryStage.setWidth(400);
+
+            primaryStage.show();
+
+        }
+    */
     @Override
     public void start(Stage primaryStage) throws Exception {
         CategoryAxis xAxis = new CategoryAxis();
@@ -242,7 +254,7 @@ public class Main extends Application {
         barChart.getData().add(strang);
 
 
-        barChart.setTitle("Feiertagberechner von "+ startyear+" über " + countyear + " Jahre");
+        barChart.setTitle("Feiertagberechner von "+ fromTo);
 
         VBox vbox = new VBox(barChart);
 
@@ -254,4 +266,153 @@ public class Main extends Application {
 
         primaryStage.show();
     }
+
+    public static void connectDB() {
+        Connection conn = null;
+        try {
+
+            String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
+            conn = DriverManager.getConnection(url);
+
+            System.out.println("Connection to SQLite has been established.");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+    }
+
+  /*  public static void createDB(String fileName) {
+
+        String url = "jdbc:sqlite:C:/sqlite/" + fileName;
+
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+*/
+
+    public static void createTableofDB() {
+        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
+        String sql = "CREATE TABLE IF NOT EXISTS Feiertage (\n"
+                + " fromTo text not null,\n"
+                + " montag integer,\n"
+                + " dienstag integer,\n"
+                + " mittwoch integer,\n"
+                + " donnerstag integer,\n"
+                + " freitag integer)";
+
+
+        try{
+            Connection conn = DriverManager.getConnection(url);
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private Connection connection() {
+
+        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+
+    public void insert() {
+        String sql = "INSERT INTO Feiertage(fromTo,montag, dienstag, mittwoch, donnerstag, freitag) VALUES(?,?,?,?,?,?)";
+
+        try{
+
+            Connection conn = this.connection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fromTo);
+            pstmt.setInt(2, mon );
+            pstmt.setInt(3, tue );
+            pstmt.setInt(4, wed );
+            pstmt.setInt(5,thu );
+            pstmt.setInt(6, fri);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void createNewDatabase() {
+
+        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void vonBis(){
+        //startyear = startjahr
+        //Countyear = anzahl JAhre
+        //Wenn startyear 2020 und COuntyear 1 ist, ist es nur 2020
+        //Bei 2 wäre es 2020 - 2021 usw.
+
+        if(countyear == 1){
+            fromTo = "01.01."+ startyear + " - 31.12." +startyear;
+        }else if(countyear >1){
+            fromTo =  "01.01."+ startyear + " - 31.12." +(startyear+(countyear-1));
+        }
+
+    }
+
+    public void selectDB(){
+        String sql = "SELECT * from Feiertage";
+
+        try{
+            Connection con = this.connection();
+            Statement stmt = connection().createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+
+                System.out.println(
+                                rs.getString("fromTo") + "\t" + "\t" +
+                                rs.getInt("montag") + "\t" + "\t" +
+                                rs.getInt("dienstag") + "\t" + "\t" +
+                                rs.getInt("mittwoch") + "\t" + "\t" +
+                                rs.getInt("Donnerstag") + "\t" + "\t" +
+                                rs.getInt("Freitag") + "\t" + "\t");
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
