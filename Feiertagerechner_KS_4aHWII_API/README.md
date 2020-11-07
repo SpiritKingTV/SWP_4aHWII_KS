@@ -10,10 +10,10 @@ Um dieses Programm ausführen zu können brauchen Sie:
 Zunächst müssen Sie noch ein paar Zeilen in der Main.Java umschreiben:
 1) Bei Zeile 41: Ihren Speicherort von der hlidays.xml FIle angeben
 
-2) Bei Zeile 42: Ihren Speicherort von Ihrer Database.db file angeben (falls sie nicht existiert wird sie 
+//2) Bei Zeile 42: Ihren Speicherort von Ihrer Database.db file angeben (falls sie nicht existiert wird sie 
 automatisch am angegebenen Speicherort erstellt)
 
-3) Danach müssen Sie die .jar Files (Libraries die für dieses Programm benötigt werden) importiert werden
+##3)## Danach müssen Sie die .jar Files (Libraries die für dieses Programm benötigt werden) importiert werden
 Dies ist bei den verschiedenen IDE's unterschiedlich..
 a) IntelliJ: File -> Project Structure -> Modules -> Dependencies -> + -> Libraries -> (Libraries auswählen)
 -> apply
