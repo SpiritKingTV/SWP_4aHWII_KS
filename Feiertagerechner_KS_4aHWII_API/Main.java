@@ -39,6 +39,7 @@ public class Main extends Application {
     static String fromTo = "";
     static String Bundesland = "&nur_land=BY";
     static File file = new File("C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\src\\holidays.xml");
+   static String urlDB ="jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
 
     public static void main(String[] args) throws IOException {
         importFile();
@@ -63,9 +64,9 @@ public class Main extends Application {
         vonBis();
         Application.launch(args);
 
-        db.connectDB();
-        db.createNewDatabase();
-        db.createTableofDB();
+        db.connectDB(urlDB);
+        db.createNewDatabase(urlDB );
+        db.createTableofDB(urlDB);
         db.insert();
         db.selectDB();
 
@@ -267,11 +268,11 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void connectDB() {
+    public static void connectDB(String url) {
         Connection conn = null;
         try {
 
-            String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
 
             conn = DriverManager.getConnection(url);
 
@@ -308,8 +309,8 @@ public class Main extends Application {
     }
 */
 
-    public static void createTableofDB() {
-        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+    public static void createTableofDB(String url ) {
+
 
         String sql = "CREATE TABLE IF NOT EXISTS Feiertage (\n"
                 + " fromTo text not null,\n"
@@ -329,9 +330,8 @@ public class Main extends Application {
         }
     }
 
-    private Connection connection() {
+    private Connection connection(String url) {
 
-        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
 
         Connection conn = null;
         try {
@@ -348,7 +348,7 @@ public class Main extends Application {
 
         try{
 
-            Connection conn = this.connection();
+            Connection conn = this.connection(urlDB );
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, fromTo);
             pstmt.setInt(2, mon );
@@ -362,9 +362,9 @@ public class Main extends Application {
         }
     }
 
-    public static void createNewDatabase() {
+    public static void createNewDatabase(String url) {
 
-        String url = "jdbc:sqlite:C:\\Users\\repet\\Desktop\\repositories\\SWP\\Ferienrechner mit DB\\Database.db";
+
 
         try {
             Connection conn = DriverManager.getConnection(url);
@@ -397,8 +397,8 @@ public class Main extends Application {
         String sql = "SELECT * from Feiertage";
 
         try{
-            Connection con = this.connection();
-            Statement stmt = connection().createStatement();
+            Connection con = this.connection(urlDB );
+            Statement stmt = connection(urlDB ).createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
 
