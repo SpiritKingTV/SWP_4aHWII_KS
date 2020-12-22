@@ -18,6 +18,6 @@ deswegen wurde es in diesem Programm heraus gelassen.
 
 ## Funktionsweise
 Zuerst darf der Benutzer den Kürzel des Unternehmens eingeben. Danach werden Alle Daten von der API in eine Liste geschrieben, sortiert, und in eine Hashmap geschrieben
-Danach wird es in die Datenbank geschrieben und man kann den Schnitt auswählen (Bsp. 200er SCHnitt, 50er SCHnitt usw...)dabei ist die Zahl frei wählbar.
+Danach wird es in die Datenbank geschrieben und man kann den Schnitt auswählen (Bsp. 200er Schnitt, 50er Schnitt usw...)dabei ist die Zahl frei wählbar.
 Als nächstes werden die Daten aus der Datenbank geholt und für den Graphen von JavaFX verwendet.
 
