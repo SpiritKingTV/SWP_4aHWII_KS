@@ -1,7 +1,7 @@
 
 # AktienProgramm
 Ist ein Programm, bei dem man Aktien von verschiedenen Unternehmen aus einer API auslesen kann, die wiederum in eine Datenbank
-gespeichert wird und Grafisch mit JavaFX ausgegeben werden
+gespeichert wird und aus der Datenbank heraus Grafisch mit JavaFX dargestellt werden
 
 ## Was braucht man dafür
 * [JavaFX](https://openjfx.io)</br>
@@ -13,11 +13,14 @@ gespeichert wird und Grafisch mit JavaFX ausgegeben werden
 ## JavaFX
 ![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
 
-note: Leider habe ich es noch nicht geschafft, dass sich die Farbe auf grün ändert, wenn der Graph über den SChnitt ist,
-deswegen wurde es in diesem Programm heraus gelassen.
-
 ## Funktionsweise
-Zuerst darf der Benutzer den Kürzel des Unternehmens eingeben. Danach werden Alle Daten von der API in eine Liste geschrieben, sortiert, und in eine Hashmap geschrieben
-Danach wird es in die Datenbank geschrieben und man kann den Schnitt auswählen (Bsp. 200er Schnitt, 50er Schnitt usw...)dabei ist die Zahl frei wählbar.
-Als nächstes werden die Daten aus der Datenbank geholt und für den Graphen von JavaFX verwendet.
+Zuerst darf der Benutzer den Kürzel des Unternehmens eingeben. Danach werden alle Daten von der API in eine Hashmap zwischengespeichgert und danach in die Datenbank geschrieben.
+Danach kann man noch angeben, welchen Schnitt man haben will(z.B. 200er Schnitt, 50er Schnitt [dynamisch]). Danach kann man noch auswählen, ob man den ganzen Graphen oder die letzten beliebigen Werte des angegebenen Unternehmens darstellen will(Die letzten 500 Werte z.B [siehe Bild])
 
+## Zusätzliche Features
+ 1) Wenn der letzte gleitende Mittelwert größer als der Close-Wert ist, ist der Hintergrund des Charts rot, und ansonsten grün
+ 2) Man kann alle oder eine bestimmte Anzahl der letzten Werte darstellen lassen
+ 3) Die y-Achse beginnt nicht bei null(Passt sich auf den Graphen an)
+
+## Bild von den letzten 500 WErten von IBM
+![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
