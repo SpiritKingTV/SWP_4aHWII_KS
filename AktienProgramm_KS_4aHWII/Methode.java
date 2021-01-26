@@ -228,16 +228,6 @@ public int laengeDB(){
             System.out.println(e.getMessage());
         }
     }
-    public static void outputsize(String unternehmen){
-        System.out.print("Möchten sie die volle oder Kompakte version des Unternehmens:(v/c)");
-        char antwort = reader.next().charAt(0);
-        if(antwort == 'v'){
-
-            urlDB ="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + unternehmen + "&outputsize=full&apikey=T5PECTJY4ZNB1WPA";
-        }else{
-            urlDB ="https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + unternehmen + "&outputsize=compact&apikey=T5PECTJY4ZNB1WPA";
-        }
-    }
 
 
     public static String graphsize(String unternehmen){
