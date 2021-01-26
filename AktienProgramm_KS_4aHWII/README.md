@@ -11,7 +11,7 @@ gespeichert wird und Grafisch mit JavaFX ausgegeben werden
 * [Alphavantage API](https://www.alphavantage.co)
 
 ## JavaFX
-![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM%20Aktie.PNG)
+![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
 
 note: Leider habe ich es noch nicht geschafft, dass sich die Farbe auf grün ändert, wenn der Graph über den SChnitt ist,
 deswegen wurde es in diesem Programm heraus gelassen.
