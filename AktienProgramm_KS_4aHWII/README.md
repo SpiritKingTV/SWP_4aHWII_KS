@@ -22,5 +22,5 @@ Danach kann man noch angeben, welchen Schnitt man haben will(z.B. 200er Schnitt,
  2) Man kann alle oder eine bestimmte Anzahl der letzten Werte darstellen lassen
  3) Die y-Achse beginnt nicht bei null(Passt sich auf den Graphen an)
 
-## Bild von den letzten 500 WErten von IBM
+## Bild von den letzten 500 Werten von IBM
 ![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
