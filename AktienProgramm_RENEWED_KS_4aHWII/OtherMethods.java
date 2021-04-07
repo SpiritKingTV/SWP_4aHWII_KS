@@ -1,5 +1,7 @@
 package Methods;
 
+import Main.Program;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +52,38 @@ public class OtherMethods {
             bfr.close();
         }catch(FileNotFoundException e){
             e.printStackTrace();
+        }
+
+    }
+
+
+    public static void clearAllLists(){
+        DataBase.readCloseFromDB.clear();
+        DataBase.readDateAndCloseDB.clear();
+        DataBase.readDateFromDB.clear();
+        API.dates.clear();
+        API.HMDatesAndValues.clear();
+        OtherMethods.Schnitt200er.clear();
+        OtherMethods.CloseAndSchnitt.clear();
+
+
+    }
+    public static String readAPIKeyFromFile () throws IOException {
+        String a;
+        String apikey = "";
+        try{
+            BufferedReader bfr = new BufferedReader(new FileReader("E:/Plugins dev/StocksProject/src/Methods/APIKey.txt"));
+
+            while((a = bfr.readLine())!= null){
+                apikey = a;
+
+
+            }
+            bfr.close();
+            return apikey;
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+            return null;
         }
 
     }
