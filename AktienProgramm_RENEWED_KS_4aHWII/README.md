@@ -15,8 +15,10 @@ Mithilfe von JavaFX wird der Graph erstellt und danach mithilfe einer Java Klass
 ![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
 
 ## Funktionsweise
-Nachdem man die Textfile mit den Aktienkürzel eingegeben hat, und mit den Windows-Steuerungen das Programm automatisch an einer bestimmten Urzeit ausführen lässt,
-kann man es, ohne selbst was tun zu müssen laufen lassen.
+Zuerst muss man die 1. Zeile beim Starten des Programms kopieren, und in dem Texteditor einfügen. Die File muss anschließend als .cmd gespeichert werden.
+Danach muss man die Textfile mit den Aktienkürzel erstellen,dessen Pfad im Programm angegeben werden muss. Mit den Windows-Steuerungen kann man dann die vorher
+erstellte CMD-File jeden Tag an einer bestimmten Urzeit ausführen lassen. Danach funktioniert das Program automatisch
+
 
 ## Zusätzliche Features
  1) Wenn der letzte gleitende Mittelwert größer als der Close-Wert ist, ist der Hintergrund des Charts rot, und ansonsten grün
