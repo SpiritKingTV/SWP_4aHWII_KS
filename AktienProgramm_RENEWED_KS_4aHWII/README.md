@@ -12,7 +12,7 @@ und anschließend ein Bild davon speichert.
 
 ## JavaFX
 Mithilfe von JavaFX wird der Graph erstellt und danach mithilfe einer Java Klasse gescreenshottet wird
-![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_KS_4aHWII/IBM_Aktie.PNG)
+![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_RENEWED_KS_4aHWII/googl_2021-04-04.png)
 
 ## Funktionsweise
 Zuerst muss man die 1. Zeile beim Starten des Programms kopieren, und in dem Texteditor einfügen. Die File muss anschließend als .cmd gespeichert werden.
