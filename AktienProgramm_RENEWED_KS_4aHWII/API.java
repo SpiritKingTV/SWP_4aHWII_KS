@@ -17,7 +17,7 @@ public static HashMap<LocalDate, String> HMDatesAndValues = new HashMap<>();
 
 
     public static void connectToAPI(String unternehmen) throws IOException, JSONException{
-        String link = IOUtils.toString(new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + unternehmen + "&outputsize=full&apikey=T5PECTJY4ZNB1WPA"));
+        String link = IOUtils.toString(new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=" + unternehmen + "&outputsize=full&apikey="+OtherMethods.readAPIKeyFromFile()));
         JSONObject obj = new JSONObject(link);
         JSONObject daily = obj.getJSONObject("Time Series (Daily)");
 
