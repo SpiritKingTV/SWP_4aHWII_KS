@@ -4,16 +4,23 @@ import Methods.API;
 import Methods.DataBase;
 import Methods.OtherMethods;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import javax.sound.midi.Soundbank;
 import javax.xml.crypto.Data;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,25 +30,30 @@ public class Program extends Application {
     public static ArrayList<String> stocksToRead = new ArrayList<String>();
     public static String unterName;
     public static void main(String[] args) throws IOException, SQLException {
-     unterName = OtherMethods.getUnternhemenname();
-        API.connectToAPI(unterName);
-        DataBase.connectToDB();
-        DataBase.createTable(unterName);
-        DataBase.insert(unterName);
 
-        DataBase.selectDB(unterName);
-        OtherMethods.calc200Schnitt();
-        DataBase.updateAddSchnitt(unterName);
-        System.out.println(DataBase.readDateFromDB);
-        OtherMethods.readStocksFromFile(stocksToRead);
-        System.out.println(stocksToRead);
+   launch(args);
 
 
-
-launch(args);
     }
     @Override
 public  void start(Stage stage) throws Exception{
+        OtherMethods.readStocksFromFile(stocksToRead);
+        DataBase.connectToDB();
+        for(int i=0;i<stocksToRead.size();i++){
+            unterName = stocksToRead.get(i);
+            API.connectToAPI(unterName);
+
+
+
+            DataBase.createTable(unterName);
+            DataBase.insert(unterName);
+
+            DataBase.selectDB(unterName);
+            OtherMethods.calc200Schnitt();
+            DataBase.updateAddSchnitt(unterName);
+           // System.out.println(DataBase.readDateFromDB);
+            OtherMethods.clearAllLists();
+
         stage.setTitle("Stock Monitoring");
 
         final CategoryAxis date = new CategoryAxis();
@@ -52,8 +64,7 @@ public  void start(Stage stage) throws Exception{
 
         lineChart.setTitle("Stock Monitoring of " + unterName);
         //defining a series
-        XYChart.Series graph = new XYChart.Series();
-        XYChart.Series mittelwert = new XYChart.Series();
+
         //populating the series with data
         XYChart.Series series1 = new XYChart.Series();
         XYChart.Series series2 = new XYChart.Series();
@@ -74,10 +85,20 @@ public  void start(Stage stage) throws Exception{
         }catch(SQLException e){
             e.printStackTrace();
         }
-        //sdfadsfasedf
+            String sql = "select * from " +  unterName + " order by DateofValue desc limit 1";
         double avg=0;
         double cl=0;
-        //dsfgsedrfgsdfgsdkomischer SHitr 93-105
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                avg = Double.parseDouble(rs.getString("Schnitt"));
+                cl = Double.parseDouble(rs.getString("CloseValue"));
+
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
         String css;
         Scene scene = new Scene(lineChart,1500,900);
@@ -88,6 +109,7 @@ public  void start(Stage stage) throws Exception{
         }else if(avg>cl){
             scene.getStylesheets().add("red.css");
         }else{
+            System.out.println("SERVAS KAISER");
 
         }
         close.setAutoRanging(false);
@@ -96,13 +118,27 @@ public  void start(Stage stage) throws Exception{
         close.setLowerBound(botBound-20);
         close.setUpperBound(topBound+20);
 
-
+        lineChart.setAnimated(false);
         lineChart.getData().addAll(series1,series2);
 
         lineChart.setCreateSymbols(false);
 
+
+
+
+        //foto vcon Stocks
         stage.setScene(scene);
-        stage.show();
+        WritableImage writableImage = scene.snapshot(null);
+        File file = new File("E:\\Plugins dev\\StocksProject\\src\\Images\\"+ unterName+"_"+LocalDate.now()+".png");
+        ImageIO.write(SwingFXUtils.fromFXImage(writableImage,null),"PNG",file);
+            System.out.println(unterName+" completed");
+            stage.close();
+
+        }
+
+
+        System.exit(0);
+
 
 
     }
