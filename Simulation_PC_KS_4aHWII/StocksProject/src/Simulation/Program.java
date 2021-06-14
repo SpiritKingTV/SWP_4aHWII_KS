@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 enum StockStrats{
@@ -60,19 +61,18 @@ public class Program {
     //Methods
     public static void input() throws IOException {
 
-        //Validation
-        //
-        //
+
         OtherMethods.readStocksFromFile(allStocks);
         System.out.println("Available shares:" + allStocks);
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         //Aus Textfile verfügbare Aktien auslesen
         System.out.print("Your choice: ");
         selectedStock = reader.next().toLowerCase();
         System.out.print("Seed capital[$]: ");
         startMoney = reader.nextDouble();
-        System.out.print("Start-date [yyyy-mm-dd]: ");
-        startDate = LocalDate.parse(reader.next());
+        System.out.print("Start-date [dd-MM-yyyy]: ");
+        String date = reader.next();
+        startDate = LocalDate.parse(date,formatter);
         StartDateMinusOne = startDate.minusDays(1);
     }
 
@@ -390,6 +390,8 @@ public class Program {
             e.printStackTrace();
         }
         System.out.println("Nach der Simulation von "+usedStratName(strat)+" hast du "+(moneyafter/moneybefore*100)+ " % vom Startkapital");
+        System.out.println("Vorher: "+moneybefore + " |  Danach: "+moneyafter);
+        System.out.println("");
 
     }
     public static String usedStratName(StockStrats s){
@@ -425,8 +427,10 @@ public class Program {
         System.out.print("Available Money[$]: ");
         startMoney = reader.nextDouble();
         startMoney =startMoney/allStocks.size();
-        System.out.print("Start Date[yyyy/mm/dd]:");
-        startDate =  LocalDate.parse(reader.next());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        System.out.print("Start Date[dd/MM/yyyy]:");
+        String date = reader.next();
+        startDate =  LocalDate.parse(date,formatter);
         StartDateMinusOne = startDate.minusDays(1);
     }
 
@@ -446,11 +450,15 @@ public class Program {
 
         }catch(SQLException e){
             e.printStackTrace();
+
         }
         wholeMoneyTogether = wholeMoneyTogether + money;
 
         }
-        System.out.println("Nach der Simulation von "+usedStratName(strat)+" mit aufgeteiltes Geld auf den Aktien hast du "+(money/startMoney*Stocks.size()*100)+ " % vom Startkapital");
+        int AmountOfStocks = Stocks.size();
+        System.out.println("Nach der Simulation von "+usedStratName(strat)+" mit aufgeteiltes Geld auf den Aktien hast du "+((wholeMoneyTogether/(startMoney*AmountOfStocks))*100)+ " % vom Startkapital");
+        System.out.println("Vorher: "+startMoney*Stocks.size()+"  | Nachher: "+wholeMoneyTogether);
+        System.out.println("");
 
     }
 
