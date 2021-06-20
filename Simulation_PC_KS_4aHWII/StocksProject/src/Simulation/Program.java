@@ -333,7 +333,7 @@ public class Program {
                 schnitt = rs.getDouble("Schnitt");
                 if (boughtOrSoldBefore(unternehmen,strat)) {
                     //true --> habe vorher gekauft -> will verkaufen
-                    if (close < schnitt + (schnitt*0.03)) {
+                    if (close < schnitt -(schnitt*0.03)) {
                         double sBefore = stocksBefore(unternehmen,strat);
                         double mBefore = moneyBefore(unternehmen,strat);
                         double moneyAfterSell = mBefore + (close * sBefore);
@@ -342,7 +342,7 @@ public class Program {
                     }
                 } else {
                     //false --> habe vorher verkauft -> will kaufen
-                    if (close > schnitt-(schnitt*0.03) && !date.equals(lastDay(unternehmen))) {
+                    if (close > schnitt+(schnitt*0.03) && !date.equals(lastDay(unternehmen))) {
                         //insert und rechnung mit kaufen
                         double mbefore = moneyBefore(unternehmen,strat);
                         int roundedNumber = (int) (mbefore / close);
