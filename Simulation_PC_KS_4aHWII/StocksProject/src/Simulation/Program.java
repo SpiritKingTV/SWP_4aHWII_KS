@@ -60,7 +60,7 @@ public class Program {
 
     //Methods
     public static void input() throws IOException {
-
+        boolean negative = true;
 
         OtherMethods.readStocksFromFile(allStocks);
         System.out.println("Available shares:" + allStocks);
@@ -68,8 +68,14 @@ public class Program {
         //Aus Textfile verfügbare Aktien auslesen
         System.out.print("Your choice: ");
         selectedStock = reader.next().toLowerCase();
-        System.out.print("Seed capital[$]: ");
-        startMoney = reader.nextDouble();
+        do{
+            System.out.print("Seed capital[$]: ");
+            startMoney = reader.nextDouble();
+            if(startMoney > 0 ){
+                negative = false;
+            }
+        }while(negative == true);
+
         System.out.print("Start-date [dd-MM-yyyy]: ");
         String date = reader.next();
         startDate = LocalDate.parse(date,formatter);
@@ -422,10 +428,18 @@ public class Program {
     }
 
     public static void InputMultipleStocks() throws IOException {
+        boolean negative = false;
         OtherMethods.readStocksFromFile(allStocks);
         System.out.println("Selected Shares:" + allStocks);
+        do{
+
+
         System.out.print("Available Money[$]: ");
         startMoney = reader.nextDouble();
+        if(startMoney>0){
+            negative = true;
+        }
+        }while(negative == false);
         startMoney =startMoney/allStocks.size();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.print("Start Date[dd/MM/yyyy]:");
@@ -436,10 +450,10 @@ public class Program {
 
     public  static void calcProfitFromAll(ArrayList<String> Stocks, StockStrats strat){
         double money=0, wholeMoneyTogether=0;
-        for(int i=0;i<Stocks.size()-1;i++){
+        for(String i : Stocks){
 
 
-        String sql = "select * from "+Stocks.get(i)+"_sim_"+strat+" order by DateOfDay desc limit 1";
+        String sql = "select * from "+i+"_sim_"+strat+" order by DateOfDay desc limit 1";
 
         try{
             Statement stmt = connection.createStatement();
@@ -463,22 +477,28 @@ public class Program {
     }
 
     public static void executeMultipleStocksAllStrategies(ArrayList<String> Stocks){
-for(int i =0;i<Stocks.size()-1;i++){
-    buyAndHold(Stocks.get(i), startMoney, startDate,StockStrats.Hold);
-    cycleSimulationNormal(Stocks.get(i),StockStrats.Cycle);
-    cycleSimulationWithPercent(Stocks.get(i),StockStrats.Cycle3);
+        for (String i : Stocks)
+        {
+            buyAndHold(i, startMoney, startDate,StockStrats.Hold);
+            System.out.println(i);
+            cycleSimulationNormal(i,StockStrats.Cycle);
+            cycleSimulationWithPercent(i,StockStrats.Cycle3);
+        }
+//    buyAndHold(Stocks.get(i), startMoney, startDate,StockStrats.Hold);
+  //  cycleSimulationNormal(Stocks.get(i),StockStrats.Cycle);
+    //cycleSimulationWithPercent(Stocks.get(i),StockStrats.Cycle3);
 }
 
 
-    }
+
     public static void TableSetupAll(ArrayList<String> Stocks) throws SQLException {
-for(int i=0;i<Stocks.size()-1;i++){
-    createTable(Stocks.get(i),StockStrats.Hold);
-    createTable(Stocks.get(i),StockStrats.Cycle);
-    createTable(Stocks.get(i),StockStrats.Cycle3);
-    sillyDbEntry(Stocks.get(i), startMoney,StockStrats.Hold);
-    sillyDbEntry(Stocks.get(i), startMoney,StockStrats.Cycle);
-    sillyDbEntry(Stocks.get(i), startMoney,StockStrats.Cycle3);
+for(String i: Stocks){
+    createTable(i,StockStrats.Hold);
+    createTable(i,StockStrats.Cycle);
+    createTable(i,StockStrats.Cycle3);
+    sillyDbEntry(i, startMoney,StockStrats.Hold);
+    sillyDbEntry(i, startMoney,StockStrats.Cycle);
+    sillyDbEntry(i, startMoney,StockStrats.Cycle3);
 
 }
     }
