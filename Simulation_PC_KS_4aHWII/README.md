@@ -15,7 +15,7 @@ und anschließend ein Bild davon speichert.
 Zuerst kann man sich aussuchen, ob man die Strategien mit einer Aktie ausgeführt werden soll, oder ob man das vorhandene Geld aufteilt, und auf Alle Aktien verteilt und alle Strategien durchgeht. Am Ende werden die Endbetrage der Strategien ausgegeben
 
 ## Ausgabe
-![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/AktienProgramm_RENEWED_KS_4aHWII/googl_2021-04-04.png)
+![.](https://github.com/SpiritKingTV/SWP_4aHWII_KS/blob/master/Simulation_PC_KS_4aHWII/Simulation_Aktie.PNG)
 
 
  
