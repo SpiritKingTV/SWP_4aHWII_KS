@@ -8,6 +8,7 @@ import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -469,9 +470,11 @@ public class Program {
         wholeMoneyTogether = wholeMoneyTogether + money;
 
         }
+          NumberFormat n = NumberFormat.getInstance();
+        n.setMaximumFractionDigits(2);
         int AmountOfStocks = Stocks.size();
-        System.out.println("Nach der Simulation von "+usedStratName(strat)+" mit aufgeteiltes Geld auf den Aktien hast du "+((wholeMoneyTogether/(startMoney*AmountOfStocks))*100)+ " % vom Startkapital");
-        System.out.println("Vorher: "+startMoney*Stocks.size()+"  | Nachher: "+wholeMoneyTogether);
+        System.out.println("Nach der Simulation von "+usedStratName(strat)+" mit aufgeteiltes Geld auf den Aktien hast du "+n.format((wholeMoneyTogether/(startMoney*AmountOfStocks))*100)+ " % vom Startkapital");
+        System.out.println("Vorher: "+startMoney*Stocks.size()+"  | Nachher: "+n.format(wholeMoneyTogether));
         System.out.println("");
 
     }
