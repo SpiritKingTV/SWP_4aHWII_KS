@@ -9,7 +9,7 @@ und anschließend ein Bild davon speichert.
 ## Strategien
 * Buy and Hold
 * Kauf oder Verkauf beim SChnittpunkt mit dem 200er Schnitt
-* * + mit 3% Toleranz nach oben/unten
+* 2te Strategie mit 3% Toleranz nach oben/unten
 
 ## Funktionsweise
 Zuerst kann man sich aussuchen, ob man die Strategien mit einer Aktie ausgeführt werden soll, oder ob man das vorhandene Geld aufteilt, und auf Alle Aktien verteilt und alle Strategien durchgeht. Am Ende werden die Endbetrage der Strategien ausgegeben
