@@ -1,5 +1,5 @@
 
-# AktienSimulation
+# Aktien-Simulation
 Ist ein Program, welches einmal am Tag an einer bestimmten Urzeit ausgeführt wird, und in einer Textdatei angegebenen Aktien aus einer API herausliest, in der Datenbank einspeichert 
 und anschließend ein Bild davon speichert.
 
